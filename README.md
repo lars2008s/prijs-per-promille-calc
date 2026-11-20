@@ -44,7 +44,7 @@ npm run dev               # Vite + lokale stand-in voor de edge function
 npm test                  # unit tests (Vitest)
 npm run typecheck
 npm run e2e -- http://localhost:5173   # end-to-end in Chrome (playwright-core)
-npm run bench -- gpt-5.4-mini none     # modelvergelijking op de testkaarten
+npm run bench -- gpt-6-luna low       # modelvergelijking op de testkaarten
 ```
 
 Omgevingsvariabelen (Netlify → Site configuration → Environment variables):
@@ -52,8 +52,8 @@ Omgevingsvariabelen (Netlify → Site configuration → Environment variables):
 | Variabele | Standaard | Doel |
 | --- | --- | --- |
 | `OPENAI_API_KEY` | — | Verplicht, enkel server-side |
-| `OPENAI_MODEL` | `gpt-5.4-mini` | Vision-model voor het lezen van de kaart |
-| `OPENAI_REASONING_EFFORT` | `none` | Sneller zonder redeneren; zelfde nauwkeurigheid op de testkaarten |
+| `OPENAI_MODEL` | `gpt-6-luna` | Vision-model voor het lezen van de kaart (~$0,001 per foto) |
+| `OPENAI_REASONING_EFFORT` | `low` | Een beetje redeneren: houdt prijzen juist gekoppeld op scheve of wazige foto's |
 | `ALLOWED_HOSTS` | ppp.larsschrijvers.be, netlify.app, localhost | Origins die de scanner en teller mogen aanroepen |
 | `ANALYTICS_SALT` | — | Geheim voor de dagelijkse bezoekers-hash |
 | `STATS_TOKEN` | — | Wachtwoord voor `/stats` |

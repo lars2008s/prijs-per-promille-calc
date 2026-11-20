@@ -2,7 +2,9 @@
 // Only web-standard APIs (fetch, Request, Response) are used here.
 import { CATEGORIES } from "./categories.ts";
 
-export const DEFAULT_MODEL = "gpt-5.4-mini";
+// gpt-6-luna with a little reasoning: ~$0.001 per photo and robust on tilted/blurry menus (benchmarked 2026-11-20).
+export const DEFAULT_MODEL = "gpt-6-luna";
+export const DEFAULT_REASONING_EFFORT = "low";
 
 export { CATEGORIES };
 
@@ -68,7 +70,7 @@ Rules:
 export interface ScanRequestOptions {
   model?: string;
   detail?: "low" | "high" | "auto" | "original";
-  reasoningEffort?: "none" | "minimal" | "low" | "medium" | "high" | null;
+  reasoningEffort?: "none" | "minimal" | "low" | "medium" | "high" | "xhigh" | "max" | null;
   stream?: boolean;
 }
 
@@ -97,7 +99,7 @@ export function buildOpenAIRequest(imageDataUrl: string, opts: ScanRequestOption
     store: false,
     stream: opts.stream ?? true,
   };
-  const effort = opts.reasoningEffort === undefined ? "none" : opts.reasoningEffort;
+  const effort = opts.reasoningEffort === undefined ? DEFAULT_REASONING_EFFORT : opts.reasoningEffort;
   if (effort && supportsReasoning(model)) body.reasoning = { effort };
   return body;
 }
@@ -167,7 +169,7 @@ export async function handleScanRequest(req: Request, env: ScanEnv): Promise<Res
     return json(400, { error: "Stuur een foto als JPEG, PNG of WebP." });
   }
 
-  const effort = (env.reasoningEffort || "none") as ScanRequestOptions["reasoningEffort"];
+  const effort = (env.reasoningEffort || DEFAULT_REASONING_EFFORT) as ScanRequestOptions["reasoningEffort"];
   const upstream = await fetch("https://api.openai.com/v1/responses", {
     method: "POST",
     headers: { authorization: `Bearer ${env.apiKey}`, "content-type": "application/json" },

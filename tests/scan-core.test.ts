@@ -62,7 +62,8 @@ describe("handleScanRequest", () => {
 
 describe("buildOpenAIRequest", () => {
   it("only sends reasoning settings to reasoning models", () => {
-    expect(buildOpenAIRequest(IMG, { model: "gpt-5.4-mini" }).reasoning).toEqual({ effort: "none" });
+    expect(buildOpenAIRequest(IMG).reasoning).toEqual({ effort: "low" });
+    expect(buildOpenAIRequest(IMG, { model: "gpt-5.4-mini", reasoningEffort: "none" }).reasoning).toEqual({ effort: "none" });
     expect(buildOpenAIRequest(IMG, { model: "gpt-4.1-mini" }).reasoning).toBeUndefined();
   });
 });

@@ -7,7 +7,7 @@ const TRUTH: Record<string, [string, number][]> = {
   "menu-page2": [["huiswijn", 5], ["huiswijn", 24], ["cava", 7.5], ["martini", 5.5], ["porto", 5], ["aperol", 10.5], ["gin", 11], ["bacardi", 9.5], ["jenever", 3.5], ["whisky", 8], ["limoncello", 5], ["jäger", 4]],
 };
 
-const models = (process.argv[2] ?? "gpt-5.4-mini").split(",");
+const models = (process.argv[2] ?? "gpt-6-luna").split(",");
 const effort = (process.argv[3] ?? "low") as any;
 const detail = (process.argv[4] ?? "high") as any;
 const key = process.env.OPENAI_API_KEY!;
